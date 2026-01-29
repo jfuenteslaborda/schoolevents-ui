@@ -1,0 +1,32 @@
+
+<div class="carousel-container-0" style="position: relative; overflow: hidden; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    @if (slides.length > 0) {
+        <div class="carousel-slide" *ngFor="let slide of slides; let i = index" [class.active]="i === currentIndex" style="display: none; transition: opacity 0.5s ease-in-out;">
+            <img [src]="slide.image" [alt]="slide.title" style="width: 100%; height: auto; display: block; object-fit: cover; border-radius: 8px;" />
+        </div>
+
+        <button class="carousel-control-0 prev" (click)="prev()" style="position: absolute; top: 50%; transform: translateY(-50%); left: 10px; background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 50%; z-index: 10; font-size: 1.5rem;">&#10094;</button>
+        <button class="carousel-control-0 next" (click)="next()" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 50%; z-index: 10; font-size: 1.5rem;">&#10095;</button>
+    } @else {
+        <div style="
+            background-color: rgba(0, 0, 0, 0.65);
+            padding: 30px;
+            text-align: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            min-height: 250px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 80%;
+            box-sizing: border-box;
+        ">
+            No hay imágenes disponibles para mostrar de momento :).
+        </div>
+    }
+</div>
+

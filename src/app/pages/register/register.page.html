@@ -1,0 +1,85 @@
+<ion-content>
+    <div class="container">
+        <div class="header" style="margin-top: 10%">
+            <h1><span class="black">School</span><span class="green">Events</span></h1>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <h1><span>Regístrate</span></h1>
+
+            <input
+                    placeholder="Nombre Completo"
+                    type="text"
+                    formControlName="nombre"
+                    [class.invalid]="nombre?.invalid && nombre?.touched"
+            />
+            <div *ngIf="nombre?.invalid && nombre?.touched" class="error">
+                <small *ngIf="nombre?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="nombre?.errors?.['minlength']">Mínimo 3 caracteres.</small>
+            </div>
+
+            <input
+                    placeholder="Fecha de Nacimiento"
+                    type="date"
+                    formControlName="fechaNacimiento"
+                    [class.invalid]="fechaNacimiento?.invalid && fechaNacimiento?.touched"
+            />
+            <div *ngIf="fechaNacimiento?.invalid && fechaNacimiento?.touched" class="error">
+                <small>Selecciona una fecha válida.</small>
+            </div>
+
+            <input
+                    placeholder="Correo"
+                    type="email"
+                    formControlName="correo"
+                    [class.invalid]="correo?.invalid && correo?.touched"
+            />
+            @if(correo?.invalid && correo?.touched){
+                <div  class="error">
+                    <small *ngIf="correo?.errors?.['required']">El correo es obligatorio.</small>
+                    <small *ngIf="correo?.errors?.['email']">Introduce un correo válido.</small>
+                </div>
+            }
+
+            <input
+                    placeholder="Contraseña"
+                    type="password"
+                    formControlName="password"
+                    [class.invalid]="password?.invalid && password?.touched"
+            />
+            <div class="password-strength" style="height: 8px;
+                                                  width: 100%;
+                                                  background-color: #e0e0e0;
+                                                  border-radius: 9%;
+                                                  margin-bottom: 9%;
+                                                  margin-top: 5px;
+                                                  overflow: hidden;
+                                                  /* Estas propiedades ayudan a prevenir problemas de superposición y layout */
+                                                  position: relative;
+                                                  z-index: 10;">
+                <div class="strength-bar" [style.width.%]="passwordStrength" style="height: 100%;
+                                                                                      width: 20%;
+                                                                                      background: linear-gradient(to right, red, yellow, green);
+                                                                                      transition: width 0.3s ease-in-out;
+                                                                                      z-index: 11;">
+
+                </div>
+            </div>
+
+            <div *ngIf="password?.invalid && password?.touched" class="error">
+            </div>
+
+            <button class="btn" type="submit" (click)="navigateWithAnimation('/login', $event)" [disabled]="registerForm.invalid">Sign In</button>
+        </form>
+    </div>
+</ion-content>
+<ion-footer>
+    <footer class="footer-container">
+        <p>
+            Respetamos y protegemos su información personal. Los datos se usan solo para mejorar su experiencia.
+            Al usar la app, acepta nuestra <a href='login' style='color:#1E90FF; text-decoration:none;'>Política de Privacidad</a> y
+            <a href='login' style='color:#1E90FF; text-decoration:none;'>Términos y Condiciones</a>.
+            Más info en nuestra sección <strong>SchoolEvents</strong>.
+        </p>
+    </footer>
+</ion-footer>

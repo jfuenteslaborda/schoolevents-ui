@@ -1,0 +1,31 @@
+.header-calendar {
+  --background: #ffffff;
+  --border-color: transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  ion-toolbar {
+    --background: #ffffff;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    min-height: 56px;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 0.5px;
+  }
+
+  .profile-icon {
+    font-size: 28px;
+    color: #000000;
+  }
+}

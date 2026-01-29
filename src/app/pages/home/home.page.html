@@ -1,0 +1,40 @@
+<ion-content>
+    <div class="home-content">
+        <div class="header">
+            <h1><span class="black">School</span><span class="green">Events</span></h1>
+        </div>
+
+        <div class="image-section">
+            <img src="assets/school-kids.jpg" alt="Niños en el pasillo escolar" />
+            <ion-icon name="football-outline" class="icon-ball"></ion-icon>
+            <ion-icon name="tennisball-outline" class="icon-ball tennis"></ion-icon>
+        </div>
+
+        <div class="description">
+            <p>
+                Bienvenidos a <strong>SchoolEvents</strong>, la nueva app para gestionar
+                <em>eventos escolares</em>. Registra, descubre y participa en las
+                actividades del centro educativo.
+            </p>
+        </div>
+
+        <div class="button-group">
+            <ion-button expand="block" color="primary" (click)="navigateWithAnimation('/login', $event)" >Iniciar Sesión</ion-button>
+            <ion-button expand="block" color="success" (click)="navigateWithAnimation('/register', $event)" >Registrarse</ion-button>
+        </div>
+
+    </div>
+</ion-content>
+
+<ion-footer>
+    <footer class="footer-container">
+        <p>
+            Respetamos y protegemos su información personal. Los datos se usan solo para mejorar su experiencia.
+            Al usar la app, acepta nuestra <a href='login' style='color:#1E90FF; text-decoration:none;'>Política de Privacidad</a> y
+            <a href='login' style='color:#1E90FF; text-decoration:none;'>Términos y Condiciones</a>.
+            Más info en nuestra sección <strong>SchoolEvents</strong>.
+        </p>
+    </footer>
+</ion-footer>
+
+

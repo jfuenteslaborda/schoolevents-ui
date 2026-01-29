@@ -1,0 +1,26 @@
+<div class="footer-container" [class.expanded]="expanded">
+    <div class="footer-header" (click)="toggleMenu()">
+        <h2>SchoolEvents</h2>
+        <ion-icon name="school-outline" class="school-icon"></ion-icon>
+    </div>
+
+    <div class="footer-content">
+        <ion-icon
+                name="notifications-outline"
+                [class.active]="activeRoute === '/messages'"
+                (click)="navigateWithAnimation('/messages', $event)"
+        ></ion-icon>
+
+        <ion-icon
+                name="calendar-outline"
+                [class.active]="activeRoute === '/calendar'"
+                (click)="navigateWithAnimation('/calendar', $event)"
+        ></ion-icon>
+
+        <ion-icon
+                name="settings-outline"
+                [class.active]="activeRoute === '/settings'"
+                (click)="navigateWithAnimation('/settings', $event)"
+        ></ion-icon>
+    </div>
+</div>

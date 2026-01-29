@@ -1,0 +1,46 @@
+.coment-card {
+  --background: #ffffff; // fondo blanco
+  border-radius: 12px;
+  margin: 5px 0;
+  padding: 5px;
+
+  ion-item {
+    --background: transparent;
+
+    ion-label {
+      h2 {
+        font-weight: bold;
+        color: #007aff; // azul claro
+        margin-bottom: 2px;
+      }
+
+      p {
+        color: #555555;
+        font-size: 14px;
+      }
+    }
+
+    ion-avatar {
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.list-comment {
+  background: transparent ;
+  margin-bottom: 5%;
+}
+
+.buttom-event{
+  margin-bottom: 50%;
+}
+
+.buttom-comment{
+  margin: 5% auto 10%;
+  display: flex;
+  max-width: 50%;
+}
+

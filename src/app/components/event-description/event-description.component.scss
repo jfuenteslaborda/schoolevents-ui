@@ -1,0 +1,24 @@
+ion-card {
+  margin: 16px;
+  border-radius: 12px;
+  background-color: rgb(34, 42, 40);
+}
+
+ion-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+ion-button {
+  margin-right: 8px;
+}
+
+.buttom-event{
+  --background: #64b5f6;
+  --color: white;
+  --border-radius: 20px;
+
+  display: block;
+  max-width: 40%;
+  margin: 0 auto 5%;
+}

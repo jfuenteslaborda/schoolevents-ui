@@ -1,0 +1,183 @@
+<div *ngIf="eventos$ | async as eventos; else noEventos">
+    <div class="carousel-container-1" *ngIf="eventos.length > 0">
+        <div class="carousel-slide" *ngFor="let slide of slidesData; let i = index" [class.active]="i === currentIndex">
+            <img [src]="slide.image" [alt]="slide.title" />
+            <div class="carousel-caption">
+                <h2>{{ slide.title }}</h2>
+                <p>{{ slide.description }}</p>
+            </div>
+        </div>
+
+        <button class="carousel-control-1 prev" (click)="prev()">&#10094;</button>
+        <button class="carousel-control-1 next" (click)="next()">&#10095;</button>
+
+        <div class="carousel-indicators-1">
+            <span *ngFor="let slide of slidesData; let i = index"
+                  [class.active]="i === currentIndex"
+                  (click)="goTo(i)"></span>
+        </div>
+
+        <div class="carousel-button-container">
+
+            <ion-button class="carousel-button" color="primary" (click)="goToPage()">
+                Ver evento
+            </ion-button>
+
+            <ion-button *ngIf="isAdmin"
+                        class="carousel-button admin-button"
+                        color="warning"
+                        (click)="editarEvento()">
+                Editar Evento
+            </ion-button>
+
+            <ion-button *ngIf="isAdmin"
+                        class="carousel-button admin-button"
+                        color="danger"
+                        (click)="eliminarEvento()">
+                Eliminar Evento
+            </ion-button>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #noEventos>
+    <div class="card no-events-card">
+        <h3>No hay eventos disponibles</h3>
+        <p>No se encontraron eventos en las próximas dos semanas.</p>
+    </div>
+</ng-template>
+
+<ion-modal [isOpen]="showEditModal" (didDismiss)="closeEditModal()">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar style="--background: #ffffff; color: #000;">
+                <ion-title style="color: #000; font-weight: bold;">Editar Evento</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button (click)="closeEditModal()" color="primary" style="font-weight: 600;">Cerrar</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding" style="--background: #E6F7FF;">
+            <form [formGroup]="editEventForm" (ngSubmit)="saveEditEvent()">
+
+                <ion-item style="
+                    --background: #ffffff;
+                    --border-radius: 10px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    --color: #000;
+                ">
+                    <ion-label position="floating" style="color: #555;">Título del Evento</ion-label>
+                    <ion-input type="text" formControlName="title" style="--color: #000;"></ion-input>
+                </ion-item>
+                <div *ngIf="editEventForm.get('title')?.invalid && editEventForm.get('title')?.touched" class="error-message" style="color: red; margin-top: -8px; margin-bottom: 8px;">
+                    <small>Mínimo 5 caracteres.</small>
+                </div>
+
+                <ion-item style="
+                    --background: #ffffff;
+                    --border-radius: 10px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    --color: #000;
+                ">
+                    <ion-label position="floating" style="color: #555;">Fecha (DD-MM-YYYY)</ion-label>
+                    <ion-input type="date" formControlName="date" style="--color: #000;"></ion-input>
+                </ion-item>
+                <div *ngIf="editEventForm.get('date')?.invalid && editEventForm.get('date')?.touched" class="error-message" style="color: red; margin-top: -8px; margin-bottom: 8px;">
+                    <small>La fecha es obligatoria.</small>
+                </div>
+
+                <div class="image-upload-area" style="margin-bottom: 20px;">
+                    <ion-button expand="full" fill="outline" (click)="handleImageUpload()"
+                                style="--border-radius: 10px; --border-color: #ccc; height: 50px; --color: #000; --background: #ffffff;">
+                        {{ imagePreviewSrc ? 'Imagen Seleccionada' : 'Seleccionar Imagen Principal' }}
+                    </ion-button>
+
+                    <div class="preview-container" *ngIf="imagePreviewSrc">
+                        <img [src]="imagePreviewSrc" alt="Previsualización de imagen" class="image-preview"
+                             style="width: 100%;
+                                    height: 180px;
+                                    object-fit: cover;
+                                    border-radius: 10px;
+                                    margin-bottom: 15px;
+                                    margin-top: 10px;
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                                    border: 1px solid #e0e0e0;">
+                    </div>
+
+                    <input type="hidden" formControlName="src">
+                    <div *ngIf="editEventForm.get('src')?.invalid && editEventForm.get('src')?.touched" class="error-message" style="color: red; margin-top: -8px;">
+                        <small>Debe seleccionar una imagen para el evento.</small>
+                    </div>
+                </div>
+
+                <ion-item style="
+                    --background: #ffffff;
+                    --border-radius: 10px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    --color: #000;
+                ">
+                    <ion-label position="floating" style="color: #555;">Capacidad Máxima</ion-label>
+                    <ion-input type="number" formControlName="capacity" style="--color: #000;"></ion-input>
+                </ion-item>
+                <div *ngIf="editEventForm.get('capacity')?.invalid && editEventForm.get('capacity')?.touched" class="error-message" style="color: red; margin-top: -8px; margin-bottom: 8px;">
+                    <small>La capacidad es obligatoria y debe ser mayor que 0.</small>
+                </div>
+
+                <ion-item style="
+                    --background: #ffffff;
+                    --border-radius: 10px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    --color: #000;
+                ">
+                    <ion-label style="color: #000;">¿Requiere Pago?</ion-label>
+                    <ion-toggle slot="end" formControlName="need_payment" color="primary"></ion-toggle>
+                </ion-item>
+
+                <ion-item *ngIf="editEventForm.get('need_payment')?.value" style="
+                    --background: #ffffff;
+                    --border-radius: 10px;
+                    margin-bottom: 12px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    --color: #000;
+                ">
+                    <ion-label position="floating" style="color: #555;">Precio (€)</ion-label>
+                    <ion-input type="number" formControlName="price" style="--color: #000;"></ion-input>
+                </ion-item>
+                <div *ngIf="editEventForm.get('price')?.invalid && editEventForm.get('price')?.touched && editEventForm.get('need_payment')?.value" class="error-message" style="color: red; margin-top: -8px; margin-bottom: 8px;">
+                    <small>El precio es obligatorio.</small>
+                </div>
+
+                <ion-item style="
+                    --background: #ffffff;
+                    --border-radius: 10px;
+                    margin-bottom: 20px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    --color: #000;
+                ">
+                    <ion-label position="floating" style="color: #555;">Descripción</ion-label>
+                    <ion-textarea formControlName="description" rows="3" style="--color: #000;"></ion-textarea>
+                </ion-item>
+                <div *ngIf="editEventForm.get('description')?.invalid && editEventForm.get('description')?.touched" class="error-message" style="color: red; margin-top: -8px; margin-bottom: 20px;">
+                    <small>Máximo 250 caracteres.</small>
+                </div>
+
+                <ion-button type="submit" expand="block" [disabled]="editEventForm.invalid"
+                            style="--background: var(--ion-color-primary, #3880ff);
+                           --color: #ffffff;
+                           font-weight: bold;
+                           height: 50px;
+                           border-radius: 10px;
+                           margin-top: 20px;">
+                    Guardar Cambios
+                </ion-button>
+
+            </form>
+        </ion-content>
+    </ng-template>
+</ion-modal>

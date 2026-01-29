@@ -1,0 +1,21 @@
+<ion-card>
+    <ion-card-header>
+        <ion-card-title>{{ event?.title }}</ion-card-title>
+        <ion-card-subtitle>{{ event?.date }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+        <p>{{ event?.description }}</p>
+        <br>
+        <p>
+            <strong style="display: flex; justify-content: center">
+                {{ event?.need_payment ? 'Evento de pago' : 'Gratis' }}
+            </strong>
+        </p>
+    </ion-card-content>
+
+    <ion-button class="buttom-event" color="primary" (click)="suscribe()">
+        Inscribirse
+    </ion-button>
+
+</ion-card>

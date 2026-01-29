@@ -1,0 +1,93 @@
+<app-header-settings></app-header-settings>
+
+<ion-content [fullscreen]="true">
+    <div class="settings-container">
+
+        <div class="user-section">
+            <div class="avatar-container">
+                <ion-avatar class="profile-avatar">
+                    <img [src]="profileImage" alt="Foto de perfil" (error)="onImageError($event)" />
+                </ion-avatar>
+                <ion-button fill="clear" size="small" class="edit-photo-btn" (click)="changeProfileImage()">
+                    <ion-icon name="camera-outline"></ion-icon>
+                </ion-button>
+            </div>
+
+            <ion-item class="username-item">
+                <ion-input
+                        class="username-input"
+                        label="Nombre Completo"
+                        labelPlacement="stacked"
+                        [(ngModel)]="username"
+                        placeholder="Ingresa tu nombre de usuario"
+                ></ion-input>
+            </ion-item>
+
+            <p class="section-label">Foto de perfil</p>
+        </div>
+
+
+        <ion-list class="settings-list">
+            <ion-item class="settings-item">
+                <ion-input
+                        label="Correo electrónico"
+                        labelPlacement="stacked"
+                        type="email"
+                        [(ngModel)]="email"
+                        placeholder="tu@email.com"
+                        class="email-input"
+                ></ion-input>
+            </ion-item>
+        </ion-list>
+
+
+        <div class="divider"></div>
+
+
+        <ion-list class="settings-list">
+            <ion-item class="settings-item">
+                <ion-input
+                        label="Contraseña"
+                        labelPlacement="stacked"
+                        [type]="showPassword ? 'text' : 'password'"
+                        [(ngModel)]="password"
+                        placeholder="Ingresa tu contraseña"
+                        class="password-input"
+                ></ion-input>
+                <ion-button
+                        fill="clear"
+                        slot="end"
+                        (click)="togglePasswordVisibility()"
+                        class="toggle-password-btn"
+                >
+                    <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                </ion-button>
+            </ion-item>
+        </ion-list>
+
+
+        <div class="action-buttons">
+            <ion-button
+                    expand="block"
+                    class="save-button"
+                    (click)="saveChanges()"
+                    [disabled]="!isFormValid()"
+            >
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                Guardar Cambios
+            </ion-button>
+
+            <ion-button
+                    expand="block"
+                    fill="clear"
+                    class="logout-button"
+                    (click)="logout()"
+            >
+                <ion-icon name="log-out-outline" slot="start"></ion-icon>
+                Cerrar Sesión
+            </ion-button>
+        </div>
+    </div>
+</ion-content>
+
+<app-footer-menu></app-footer-menu>
