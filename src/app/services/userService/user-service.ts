@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../../interfaces/User';
 import { UserStadistics } from '../../interfaces/UserStadistics';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,8 @@ import { UserStadistics } from '../../interfaces/UserStadistics';
 export class UserService {
 
     private http = inject(HttpClient);
+
+    private api = environment.apiUrl;
 
     private currentUserSubject = new BehaviorSubject<User | null>(null);
     public currentUser$ = this.currentUserSubject.asObservable();
@@ -28,27 +31,27 @@ export class UserService {
     }
 
     obtenerUsuarios(): Observable<User[]> {
-        return this.http.get<User[]>(`/api/users/all`);
+        return this.http.get<User[]>(`${this.api}/users/all`);
     }
 
     obtenerUsuarioPorId(id: number): Observable<User> {
-        return this.http.get<User>(`/api/users/by_id/${id}`);
+        return this.http.get<User>(`${this.api}/users/by_id/${id}`);
     }
 
     obtenerUsuarioPorEmail(email: string): Observable<User> {
-        return this.http.get<User>(`/api/users/by_email/${email}`);
+        return this.http.get<User>(`${this.api}/users/by_email/${email}`);
     }
 
     obtenerEstadisticasUsuarios(): Observable<UserStadistics> {
-        return this.http.get<UserStadistics>(`/api/users/stadistic`);
+        return this.http.get<UserStadistics>(`${this.api}/users/stadistic`);
     }
 
     crearUsuario(user: User): Observable<User> {
-        return this.http.post<User>(`/api/users/create`, user);
+        return this.http.post<User>(`${this.api}/users/create`, user);
     }
 
     actualizarUsuario(id: number, user: User): Observable<User> {
-        return this.http.put<User>(`/api/users/update/${id}`, user).pipe(
+        return this.http.put<User>(`${this.api}/users/update/${id}`, user).pipe(
             tap((updated) => {
                 this.setUsuarioLogueado(updated);
             })
@@ -56,7 +59,7 @@ export class UserService {
     }
 
     eliminarUsuario(id: number): Observable<void> {
-        return this.http.delete<void>(`/api/users/delete/${id}`);
+        return this.http.delete<void>(`${this.api}/users/delete/${id}`);
     }
 
     logout() {
